@@ -1,0 +1,8 @@
+- list of tasks
+- add task to list
+- delete task from list
+- task detail
+- edit task detail nickname
+
+
+task: id, name, creation date, nickname
