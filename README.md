@@ -28,16 +28,4 @@ It's a Simple "TODO" web application using React + Redux.
 4. Page 2 : Create a detail page to display selected task (Display id, name, creation date, and nickname)
 5. Page 2 : User should allow to modify/update the task's nickname. (When user navigate back to Page 1, user should see the change.)
 
-Data structure:
-let task = {
-	id: "1",
-	name: "Submit assignemnt",
-	creationTime: "2019-01-23",
-	nickname: {
-		data:{
-			name: "React assignment"
-		}
-	}
-}
-
 NOTE: Page 2 should retrieve data from Redux store. ( Passing "task" data via Session Storage or URL parameters is not allowed. However, you can pass task's id in the url, such as localhost:3000/page2?id=1 )
