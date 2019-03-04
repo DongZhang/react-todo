@@ -1,0 +1,9 @@
+.todo-detail-wrapper {
+  padding: 16px;
+  max-width: 800px;
+  margin: auto;
+}
+
+.todo-detail-back {
+  font-size: 18px;
+}

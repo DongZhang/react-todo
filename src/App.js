@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { store } from './redux';
-import { BrowserRouter, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 // import Router from ''
 import logo from './logo.svg';
 import './App.css';
@@ -14,10 +14,11 @@ class App extends Component {
     return (
       <Provider store={store}>
         <BrowserRouter>
-          <div>
-          <Route path="/todos" component={TodoSection} />
-          <Route path="/todo/:id" component={TodoDetail} />
-          </div>
+          <Switch>
+            <Route path='/todos' component={TodoSection} />
+            <Route path='/todo/:id' component={TodoDetail} />
+            <Redirect to="/todos" />
+          </Switch>
         </BrowserRouter>
       </Provider>
     );

@@ -6,6 +6,8 @@ import { actionClick } from '../../redux/actions';
 import { selectTodoList } from '../../redux/selectors';
 import TodoCreation from '../todo/TodoCreation';
 import TodoItem from '../todo/TodoItem';
+import './TodoSection.css';
+
 
 class TodoSection extends Component {
   static propTypes = { todoList: PropTypes.array.isRequired };
@@ -17,7 +19,7 @@ class TodoSection extends Component {
   }
 
   render() {
-    return <div>TodoSection
+    return <div className="todo-section-wrapper">
       <TodoCreation></TodoCreation>
       {this.props.todoList.map(todo => {
         return todo && !todo.isDeleted && <TodoItem todo={todo} key={todo.id}></TodoItem>

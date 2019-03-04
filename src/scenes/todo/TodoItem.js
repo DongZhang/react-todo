@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 import { withRouter } from "react-router";
-// import moment from 'moment';
 import { handleDelete } from '../../redux/actions';
-// import { selectTodoList } from '../../redux/selectors';
+import { Button, Card  } from 'antd';
 
 class TodoItem extends Component {
   static propTypes = {
@@ -32,23 +31,30 @@ class TodoItem extends Component {
   render() {
     const { todo, handleDelete } = this.props;
     return (
-      <div>
-        {todo.id} {todo.name} {todo.nickname}
-        <button
-          onClick={() => {
-            handleDelete(todo.id);
-          }}
-        >
-          Delete
-        </button>
-        <button
+      <Card title={todo.name} style={{marginTop: 16}}>
+        <p>ID: {todo.id}</p>
+        <p>Nickname: {todo.nickname}</p>
+        <p>Created at: {todo.creationTime}</p>
+        <Button
+          size='small'
+          type="primary"
           onClick={() => {
             this.handleViewDetail(todo.id);
           }}
         >
           View Detail
-        </button>
-      </div>
+        </Button>
+        <Button
+          type="danger"
+          size='small'
+          onClick={() => {
+            handleDelete(todo.id);
+          }}
+          style={{marginLeft: 16}}
+        >
+          Delete
+        </Button>
+      </Card>
     );
   }
 }

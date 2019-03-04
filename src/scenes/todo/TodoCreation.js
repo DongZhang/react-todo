@@ -1,28 +1,29 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 import moment from 'moment';
+import { Form, Input, Button } from 'antd';
 import { handleSubmit } from '../../redux/actions';
 import { selectTodoList } from '../../redux/selectors';
+import './TodoCreation.css';
 
 class TodoCreation extends Component {
-  // static PropTypes = {};
-
   constructor(props) {
     super(props);
-    this.state = {
-      id: '',
-      name: '',
-      nickname: '',
-      idDeleted: false
-    };
+    this.state = {};
+  }
+  componentDidMount() {
+    this.props.form.validateFields((errors) => {});
   }
 
   setFactory = field => event => {
-    this.setState({
+    this.props.form.setFieldsValue({
       [field]: event.target.value
     });
+  };
+
+  hasErrors = fieldsError => {
+    return Object.keys(fieldsError).some(field => fieldsError[field]);
   };
 
   handleFormSubmit = event => {
@@ -30,35 +31,74 @@ class TodoCreation extends Component {
     const { todoList } = this.props;
     const date = new moment().format('YYYY-MM-DD');
 
-    this.setState(
-      {
-        id: todoList.length.toString(),
-        creationTime: date
-      },
-      () => {
-        this.props.handleSubmit(this.state);
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        values = {
+          ...values,
+          id: todoList.length.toString(),
+          creationTime: date,
+          idDeleted: false
+        };
+        this.props.handleSubmit(values);
+        this.props.form.resetFields();
+        this.props.form.validateFields((errors) => {});
       }
-    );
+    });
   };
 
   render() {
-    const { name, nickname } = this.state;
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched
+    } = this.props.form;
+
+    const nameError = isFieldTouched('name') && getFieldError('name');
+    const nicknameError =
+      isFieldTouched('nickname') && getFieldError('nickname');
+
     return (
-      <form onSubmit={this.handleFormSubmit}>
-        <input
-          type='text'
-          onChange={this.setFactory('name')}
-          placeholder='Name'
-          value={name}
-        />
-        <input
-          type='text'
-          onChange={this.setFactory('nickname')}
-          placeholder='Nickname'
-          value={nickname}
-        />
-        <button type='submit'>click</button>
-      </form>
+      <Form
+        key={this.state.key}
+        onSubmit={this.handleFormSubmit}
+        className='todo-creation-wrapper'
+      >
+        <h3 className="todo-creation-title">Create a new to-do</h3>
+        <Form.Item
+          label='Name'
+          validateStatus={nameError ? 'error' : ''}
+          help={nameError || ''}
+        >
+          {getFieldDecorator('name', {
+            rules: [{ required: true, message: 'Name is required!' }]
+          })(<Input type='text' onChange={this.setFactory('name')} />)}
+        </Form.Item>
+        <Form.Item
+          label='Nickname'
+          validateStatus={nicknameError ? 'error' : ''}
+          help={nicknameError || ''}
+        >
+          {getFieldDecorator('nickname', {
+            rules: [{ required: true, message: 'Nickname is required' }]
+          })(
+            <Input
+              type='text'
+              onChange={this.setFactory('nickname')}
+              size='large'
+            />
+          )}
+        </Form.Item>
+        <Form.Item>
+          <Button
+            type='primary'
+            htmlType='submit'
+            disabled={this.hasErrors(getFieldsError())}
+          >
+            Create
+          </Button>
+        </Form.Item>
+      </Form>
     );
   }
 }
@@ -71,7 +111,9 @@ const mapActionToProps = {
   handleSubmit: handleSubmit
 };
 
-export default connect(
-  mapStateToProps,
-  mapActionToProps
-)(TodoCreation);
+export default Form.create()(
+  connect(
+    mapStateToProps,
+    mapActionToProps
+  )(TodoCreation)
+);

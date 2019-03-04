@@ -1,0 +1,10 @@
+.todo-creation-wrapper {
+  padding: 24px;
+  background: #fbfbfb;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+}
+
+.todo-creation-title {
+  font-weight: bold;
+}
