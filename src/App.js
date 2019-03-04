@@ -16,7 +16,7 @@ class App extends Component {
         <BrowserRouter>
           <div>
           <Route path="/todos" component={TodoSection} />
-          <Route path="/todo" component={TodoDetail} />
+          <Route path="/todo/:id" component={TodoDetail} />
           </div>
         </BrowserRouter>
       </Provider>

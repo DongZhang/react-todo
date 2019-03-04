@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { actionClick } from '../../redux/actions';
 import { selectTodoList } from '../../redux/selectors';
 import TodoCreation from '../todo/TodoCreation';
+import TodoItem from '../todo/TodoItem';
 
 class TodoSection extends Component {
   static propTypes = { todoList: PropTypes.array.isRequired };
@@ -19,7 +20,7 @@ class TodoSection extends Component {
     return <div>TodoSection
       <TodoCreation></TodoCreation>
       {this.props.todoList.map(todo => {
-        return <div key={todo.id}>{todo.name} {todo.nickname}</div>
+        return todo && !todo.isDeleted && <TodoItem todo={todo} key={todo.id}></TodoItem>
       })}
 
     </div>

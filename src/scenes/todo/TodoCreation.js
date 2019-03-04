@@ -15,42 +15,63 @@ class TodoCreation extends Component {
       id: '',
       name: '',
       nickname: '',
+      idDeleted: false
     };
   }
 
   setFactory = field => event => {
     this.setState({
-      [field]: event.target.value,
+      [field]: event.target.value
     });
-  }
+  };
 
-  handleFormSubmit = (event) => {
+  handleFormSubmit = event => {
     event.preventDefault();
     const { todoList } = this.props;
     const date = new moment().format('YYYY-MM-DD');
 
-    this.setState({
-      id: todoList.length.toString(),
-      creationTime: date,
-    }, () => { this.props.handleSubmit(this.state); });
-  }
+    this.setState(
+      {
+        id: todoList.length.toString(),
+        creationTime: date
+      },
+      () => {
+        this.props.handleSubmit(this.state);
+      }
+    );
+  };
 
   render() {
     const { name, nickname } = this.state;
-    return <form onSubmit={this.handleFormSubmit}>
-      <input type="text" onChange={this.setFactory('name')} placeholder="Name" value={name}></input>
-      <input type="text" onChange={this.setFactory('nickname')} placeholder="Nickname" value={nickname}></input>
-      <button type="submit">click</button>
-    </form>
+    return (
+      <form onSubmit={this.handleFormSubmit}>
+        <input
+          type='text'
+          onChange={this.setFactory('name')}
+          placeholder='Name'
+          value={name}
+        />
+        <input
+          type='text'
+          onChange={this.setFactory('nickname')}
+          placeholder='Nickname'
+          value={nickname}
+        />
+        <button type='submit'>click</button>
+      </form>
+    );
   }
-};
+}
 
 const mapStateToProps = state => ({
-  todoList: selectTodoList(state),
+  todoList: selectTodoList(state)
 });
 
 const mapActionToProps = {
-  handleSubmit: handleSubmit,
-}
+  handleSubmit: handleSubmit
+};
 
-export default connect(mapStateToProps, mapActionToProps)(TodoCreation);
+export default connect(
+  mapStateToProps,
+  mapActionToProps
+)(TodoCreation);
