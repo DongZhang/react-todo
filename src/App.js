@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { store } from './redux';
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
-// import Router from ''
-import logo from './logo.svg';
 import './App.css';
 
 import TodoSection from './scenes/todo/TodoSection';
